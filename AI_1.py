@@ -1,5 +1,4 @@
-#Pierwsza wersja skompilowana
-
+#wszystkie dążą do 1 why???????
 import math, random, statistics
 def sigmoid(x):
     return 1/(1+math.e**(-x))
@@ -48,13 +47,13 @@ class Neuron:
                 dW5 = h1 * derivsigmoid(oo)
                 dW4 = h0 * derivsigmoid(oo)
 
-                b2 = derivsigmoid(oo)
+                self.b2 = derivsigmoid(oo)
 
                 dh0 = self.w4 * derivsigmoid(oo)
                 dh1 = self.w5 * derivsigmoid(oo)
 
-                b0 = derivsigmoid(h_0S)
-                b1 = derivsigmoid(h_1S)
+                self.b0 = derivsigmoid(h_0S)
+                self.b1 = derivsigmoid(h_1S)
 
                 dW0 = x[j][0] * derivsigmoid(h_0S)
                 dW1 = x[j][1] * derivsigmoid(h_0S)
@@ -66,10 +65,12 @@ class Neuron:
                 self.w3 = self.w3 - learn_rate * dW3 * dh1 * D_MSE
                 self.w4 = self.w4 - learn_rate * dW4 * D_MSE
                 self.w5 = self.w5 - learn_rate * dW5 * D_MSE
-            if epochs % 10 == 0:
-                y_pred = Neuron.feedforward(self, x[j])
-                mse_loss(y_data[j], y_pred)
-                print(mse_loss, y_pred)
+            if i % 100 == 0:
+                for k in range(4):
+                    y_pred = Neuron.feedforward(self, x[k])
+                    mse_loss(y_data[j], y_pred)
+                    print(x[k],y_pred,end=' ')
+                print('\n')
 
 
 data = [[0, 0], [0, 1], [1, 0], [1, 1]]
@@ -79,3 +80,4 @@ epchos = 1000
 siec = Neuron()
 
 siec.train(data, y_data, learn_rate, epchos)
+
