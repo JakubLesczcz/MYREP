@@ -8,7 +8,6 @@ def mse_loss(y,y_pred):
     #obliczanie straty
     return ((y-y_pred)**2)
 
-
 class Neuron:
     w0 = random.random()
     w1 = random.random()
@@ -20,9 +19,6 @@ class Neuron:
     b0 = random.random()
     b1 = random.random()
     b2 = random.random()
-
-    def test(self):
-        print("test")  # coś sprawdzam tylko
 
     def feedforward(self, x):
         h0 = sigmoid(self.w0 * x[0] + self.w1 * x[1] + self.b0)  # H0 = f(w0*x0 + w1*x1 + b0)
@@ -40,7 +36,6 @@ class Neuron:
                 h1 = sigmoid(self.w2 * x[j][0] + self.w3 * x[j][1]+self.b1)
                 h_1S = self.w2 * x[j][0] + self.w3 * x[j][1]+self.b1
                 oo = sigmoid((h0 * self.w4 + self.w5 * h1+self.b2))
-                # wartość końcową wstawiamy do y_pred aby móc policzyć stratę
                 y_pred = oo
 
                 D_MSE = -2 * (1 - y_pred)
@@ -69,8 +64,6 @@ class Neuron:
                 y_res.append(y_pred)
             if i % 100 == 0:
                 for k in range(4):
-                    y_pred = Neuron.feedforward(self, x[k])
-                    mse_loss(x[k], y_pred)
                     print(y_pred,end=' ')
                 print('\n')
 
@@ -82,3 +75,4 @@ epchos = 1000
 siec = Neuron()
 
 siec.train(data, y_data, learn_rate, epchos)
+
