@@ -1,4 +1,4 @@
-#nie działa do końca ale przynajmniej jest blisko
+#d
 import math, random, statistics
 def sigmoid(x):
     return 1/(1+math.e**(-x))
@@ -6,7 +6,7 @@ def derivsigmoid(x):
     return sigmoid(x*(1-x))
 def mse_loss(y,y_pred):
     #obliczanie straty
-    return ((y-y_pred)**2)
+    return ((y-y_pred)**2)/2
 
 class Neuron:
     w0 = random.random()
@@ -62,14 +62,15 @@ class Neuron:
                 self.w5 = self.w5 - learn_rate * dW5 * D_MSE
                 y_res[j]=(y_pred)
             if i % 100 == 0:
+                print(i," : ",end='')
                 for k in range(4):
-                    print(y_res[k],end=' ')
+                    print(y_res[k]," ",y_res[k]>0.35,end=' ')
                 print('\n')
 
 
 
 data = [[0, 0], [0, 1], [1, 0], [1, 1]]
-y_data = [0, 0, 0, 1]
+y_data = [0,1,1,1]
 learn_rate = 0.1
 epchos = 1000
 siec = Neuron()
