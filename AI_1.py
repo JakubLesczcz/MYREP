@@ -3,7 +3,7 @@ import math, random, statistics
 def sigmoid(x):
     return 1/(1+math.e**(-x))
 def derivsigmoid(x):
-    return x*(1-x)
+    return sigmoid(x*(1-x))
 def mse_loss(y,y_pred):
     #obliczanie straty
     return ((y-y_pred)**2)
@@ -28,8 +28,8 @@ class Neuron:
         return oo
 
     def train(self, x, y_data, learn_rate, epochs):
+        y_res = [0,0,0,0]
         for i in range(epochs):
-            y_res=[]
             for j in range(4):
                 h_0S = self.w0 * x[j][0] + self.w1 * x[j][1]+self.b0
                 h0 = sigmoid(h_0S)
@@ -38,7 +38,7 @@ class Neuron:
                 oo = sigmoid((h0 * self.w4 + self.w5 * h1+self.b2))
                 y_pred = oo
 
-                D_MSE = -2 * (1 - y_pred)
+                D_MSE = -2 * (y_res[j] - y_pred)
 
                 dW5 = h1 * derivsigmoid(oo)
                 dW4 = h0 * derivsigmoid(oo)
@@ -61,11 +61,12 @@ class Neuron:
                 self.w3 = self.w3 - learn_rate * dW3 * dh1 * D_MSE
                 self.w4 = self.w4 - learn_rate * dW4 * D_MSE
                 self.w5 = self.w5 - learn_rate * dW5 * D_MSE
-                y_res.append(y_pred)
+                y_res[j]=(y_pred)
             if i % 100 == 0:
                 for k in range(4):
                     print(y_res[k],end=' ')
                 print('\n')
+
 
 
 data = [[0, 0], [0, 1], [1, 0], [1, 1]]
@@ -75,4 +76,3 @@ epchos = 1000
 siec = Neuron()
 
 siec.train(data, y_data, learn_rate, epchos)
-
