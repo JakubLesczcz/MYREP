@@ -1,4 +1,4 @@
-#wszystkie dążą do 1 why???????
+#nie działa do końca ale przynajmniej jest blisko
 import math, random, statistics
 def sigmoid(x):
     return 1/(1+math.e**(-x))
@@ -24,7 +24,6 @@ class Neuron:
         h0 = sigmoid(self.w0 * x[0] + self.w1 * x[1] + self.b0)  # H0 = f(w0*x0 + w1*x1 + b0)
         h1 = sigmoid(self.w2 * x[0] + self.w3 * x[1] + self.b1)  # H1 = f(w2*x0 + w3*x1 + b1)
         oo = sigmoid(self.w4 * h0 + self.w5 * h1 + self.b2)  # z wzoru  O0 = f(w4*H0 + w5*H1 + b2)
-        # zwracamy wartość z ostatniego neuronu
         return oo
 
     def train(self, x, y_data, learn_rate, epochs):
@@ -38,7 +37,7 @@ class Neuron:
                 oo = sigmoid((h0 * self.w4 + self.w5 * h1+self.b2))
                 y_pred = oo
 
-                D_MSE = -2 * (y_res[j] - y_pred)
+                D_MSE = -2 * (y_data[j] - y_pred)
 
                 dW5 = h1 * derivsigmoid(oo)
                 dW4 = h0 * derivsigmoid(oo)
