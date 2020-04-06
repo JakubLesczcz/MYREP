@@ -6,7 +6,7 @@ def derivsigmoid(x):
     return x*(1-x)
 def mse_loss(y,y_pred):
     #obliczanie straty
-    return ((y-y_pred)**2)/2
+    return ((y-y_pred)**2)
 
 
 class Neuron:
@@ -33,12 +33,13 @@ class Neuron:
 
     def train(self, x, y_data, learn_rate, epochs):
         for i in range(epochs):
+            y_res=[]
             for j in range(4):
-                h_0S = self.w0 * x[j][0] + self.w1 * x[j][1]
+                h_0S = self.w0 * x[j][0] + self.w1 * x[j][1]+self.b0
                 h0 = sigmoid(h_0S)
-                h1 = sigmoid(self.w2 * x[j][0] + self.w3 * x[j][1])
-                h_1S = self.w2 * x[j][0] + self.w3 * x[j][1]
-                oo = sigmoid((h0 * self.w4 + self.w5 * h1))
+                h1 = sigmoid(self.w2 * x[j][0] + self.w3 * x[j][1]+self.b1)
+                h_1S = self.w2 * x[j][0] + self.w3 * x[j][1]+self.b1
+                oo = sigmoid((h0 * self.w4 + self.w5 * h1+self.b2))
                 # wartość końcową wstawiamy do y_pred aby móc policzyć stratę
                 y_pred = oo
 
@@ -65,11 +66,12 @@ class Neuron:
                 self.w3 = self.w3 - learn_rate * dW3 * dh1 * D_MSE
                 self.w4 = self.w4 - learn_rate * dW4 * D_MSE
                 self.w5 = self.w5 - learn_rate * dW5 * D_MSE
+                y_res.append(y_pred)
             if i % 100 == 0:
                 for k in range(4):
                     y_pred = Neuron.feedforward(self, x[k])
-                    mse_loss(y_data[j], y_pred)
-                    print(x[k],y_pred,end=' ')
+                    mse_loss(y_res[k], y_pred)
+                    print(y_pred,end=' ')
                 print('\n')
 
 
@@ -80,4 +82,3 @@ epchos = 1000
 siec = Neuron()
 
 siec.train(data, y_data, learn_rate, epchos)
-
