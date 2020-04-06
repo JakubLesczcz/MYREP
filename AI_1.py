@@ -64,7 +64,7 @@ class Neuron:
                 y_res.append(y_pred)
             if i % 100 == 0:
                 for k in range(4):
-                    print(y_pred,end=' ')
+                    print(y_res[k],end=' ')
                 print('\n')
 
 
