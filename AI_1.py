@@ -70,7 +70,7 @@ class Neuron:
             if i % 100 == 0:
                 for k in range(4):
                     y_pred = Neuron.feedforward(self, x[k])
-                    mse_loss(y_res[k], y_pred)
+                    mse_loss(x[k], y_pred)
                     print(y_pred,end=' ')
                 print('\n')
 
